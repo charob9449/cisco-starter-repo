@@ -12,7 +12,7 @@ function Exhibit() {
     }
 
     return <p className="mt-3">
-            Get my IP and Location.
+            Get my IPv4 and Location.
             
             <div className="row justify-content-center mt-3">
               <div className="col-lg-6 text-center text-dark">
@@ -22,9 +22,9 @@ function Exhibit() {
             </button>
                 {details && <ul className="list-group">
                   <li className="list-group-item">
-                    Location : { `${details.city}, ${details.country_name}(${details.country_code})` }
+                    Location : { `${details.city}, ${details.state}, ${details.country_name}(${details.country_code})` }
                   </li>
-                  <li className="list-group-item">IP {details.IPv4}</li>
+                  <li className="list-group-item">IPv4: {details.IPv4}</li>
                 </ul>}
               </div>
 
@@ -32,4 +32,38 @@ function Exhibit() {
           </p>
 }
 
-export default Exhibit;
+function Exhibit1() {
+
+    const [details, setDetails] = useState(null);
+
+    const getUserGeolocationDetails= () =>{
+      fetch("https://ipapi.co/json")
+      .then(response => response.json() )
+      .then( data => setDetails( data ) );
+    }
+
+    return <p className="mt-3">
+            Get my IPv6 and Location.
+            
+            <div className="row justify-content-center mt-3">
+              <div className="col-lg-6 text-center text-dark">
+              <button className="btn btn-primary" onClick={getUserGeolocationDetails}>
+              Find my details
+              
+            </button>
+                {details && <ul className="list-group">
+                  <li className="list-group-item">
+                    Location : { `${details.city}, ${details.region},  ${details.country_name}(${details.country_code})` }
+                  </li>
+                  <li className="list-group-item">IPv6: {details.ip}</li>
+                </ul>}
+              </div>
+
+            </div>
+          </p>
+}
+
+export {
+     Exhibit, 
+    Exhibit1,
+} 
