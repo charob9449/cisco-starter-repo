@@ -1,4 +1,30 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+
+const client = new W3CWebSocket('ws://localhost:55455');
+
+const Latency = () => {
+
+    const [
+        letency, 
+        setLatency
+    ] 
+    = useState("");
+
+    useEffect(function(){
+        client.onmessage = (message) => {
+            setLatency(new Date().getTime() - message.data);
+        };
+    }, []);
+    return (
+        <span>
+            {letency} Milliseconds
+        </span>
+    );
+}
+
+export default Latency;
 
 
 function Exhibit() {
@@ -55,7 +81,7 @@ function Exhibit1() {
                   <li className="list-group-item">
                     Location : { `${details.city}, ${details.region},  ${details.country_name}(${details.country_code})` }
                   </li>
-                  <li className="list-group-item">IPv6: {details.ip}</li>
+                  <li className="list-group-item">IPv6: {details.ip},</li>
                 </ul>}
               </div>
 
@@ -66,4 +92,5 @@ function Exhibit1() {
 export {
      Exhibit, 
     Exhibit1,
+    Latency
 } 
